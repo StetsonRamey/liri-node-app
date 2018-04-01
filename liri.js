@@ -46,7 +46,49 @@ inquirer
                     }
                 ])
                 .then(function (inquirerResponse2) {
-                    console.log(inquirerResponse2.spotifySong);
+                    if (inquirerResponse2.spotifySong != "") {
+                    spotify.search(
+                        {
+                        type: "track",
+                        query: inquirerResponse2.spotifySong,
+                        limit: 3
+                        },
+                        function (error, data) {
+                            if (!error) {
+                                // artist(s)
+                                console.log("--------------------------------------\n");
+                                console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                                // Song name
+                                console.log("Track Name: " + data.tracks.items[0].name);
+                                // preview link
+                                console.log("Preview Link: " + data.tracks.items[0].preview_url);
+                                // album
+                                console.log("Album: " + data.tracks.items[0].album.name);
+                                console.log("\n--------------------------------------\n");
+                            }
+                            else {
+                                console.log("it's f-ed: " + error);
+                            }
+                        });
+                    }
+                    else {
+                        spotify.request("https://api.spotify.com/v1/tracks/3DYVWvPh3kGwPasp7yjahc")
+                            .then(function (data) {
+                                // artist(s)
+                                console.log("--------------------------------------\n");
+                                console.log("Artist: " + data.artists[0].name);
+                                // Song name
+                                console.log("Track Name: " + data.name);
+                                // preview link
+                                console.log("Preview Link: " + data.preview_url);
+                                // album
+                                console.log("Album: " + data.album.name);
+                                console.log("\n--------------------------------------\n");
+                            })
+                            .catch(function (error) {
+                                console.log("it's f-ed: " + error);
+                            });
+                    }
                 });
         }
 
