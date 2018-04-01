@@ -23,13 +23,17 @@ inquirer
     ])
     .then(function (inquirerResponse1) {
 
-        // some testing / debugging
-        console.log(process.argv);
-        console.log(inquirerResponse1.type);
-
         // if my tweets task
         if (inquirerResponse1.type === "my-tweets") {
+            console.log("you picked tweets");
+            console.log(client);
 
+            client.get('statuses/user_timeline', function (error, tweets, response) {
+                if(error) throw error;
+                console.log(JSON.stringify(tweets, null, 2));
+                
+            })
+                
         }
 
         // if spotify task is picked
@@ -64,6 +68,6 @@ inquirer
 
         // if do what it says task
         else if (inquirerResponse1.type === "do-what-it-says") {
-
+            console.log("you picked do it do it");
         }
     });
