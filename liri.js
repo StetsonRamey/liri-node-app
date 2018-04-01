@@ -47,29 +47,29 @@ inquirer
                 ])
                 .then(function (inquirerResponse2) {
                     if (inquirerResponse2.spotifySong != "") {
-                    spotify.search(
-                        {
-                        type: "track",
-                        query: inquirerResponse2.spotifySong,
-                        limit: 3
-                        },
-                        function (error, data) {
-                            if (!error) {
-                                // artist(s)
-                                console.log("--------------------------------------\n");
-                                console.log("Artist: " + data.tracks.items[0].artists[0].name);
-                                // Song name
-                                console.log("Track Name: " + data.tracks.items[0].name);
-                                // preview link
-                                console.log("Preview Link: " + data.tracks.items[0].preview_url);
-                                // album
-                                console.log("Album: " + data.tracks.items[0].album.name);
-                                console.log("\n--------------------------------------\n");
-                            }
-                            else {
-                                console.log("it's f-ed: " + error);
-                            }
-                        });
+                        spotify.search(
+                            {
+                            type: "track",
+                            query: inquirerResponse2.spotifySong,
+                            limit: 3
+                            },
+                            function (error, data) {
+                                if (!error) {
+                                    // artist(s)
+                                    console.log("--------------------------------------\n");
+                                    console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                                    // Song name
+                                    console.log("Track Name: " + data.tracks.items[0].name);
+                                    // preview link
+                                    console.log("Preview Link: " + data.tracks.items[0].preview_url);
+                                    // album
+                                    console.log("Album: " + data.tracks.items[0].album.name);
+                                    console.log("\n--------------------------------------\n");
+                                }
+                                else {
+                                    console.log("it's f-ed: " + error);
+                                }
+                            });
                     }
                     else {
                         spotify.request("https://api.spotify.com/v1/tracks/3DYVWvPh3kGwPasp7yjahc")
@@ -103,7 +103,27 @@ inquirer
                     }
                 ])
                 .then(function (inquirerResponse3) {
-                    console.log(inquirerResponse3.searchMovie);
+                    // set the queryURL
+                    var queryUrl = "http://www.omdbapi.com/?t=" + inquirerResponse3.searchMovie + "&apikey=trilogy";
+                    console.log(queryUrl);
+
+                    request(queryUrl, function (error, response, body) {
+                        if (!error && response.statusCode === 200) {
+                            console.log("--------------------------------------\n");
+                            console.log("Title: " + JSON.parse(body).Title);
+                            console.log("Release Year: " + JSON.parse(body).Year);
+                            console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+                            // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Rating[0]);
+                            console.log("Country Where Produced: " + JSON.parse(body).Country);
+                            console.log("Language: " + JSON.parse(body).Language);
+                            console.log("Plot: " + JSON.parse(body).Plot);
+                            console.log("Actors: " + JSON.parse(body).Actors);
+                            console.log("\n--------------------------------------");
+                        }
+                        else {
+                            console.log("it's f-ed: " + error);
+                        }
+                    });
                 });
         }
 
