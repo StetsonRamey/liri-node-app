@@ -25,15 +25,14 @@ inquirer
 
         // if my tweets task
         if (inquirerResponse1.type === "my-tweets") {
-            console.log("you picked tweets");
-            console.log(client);
-
             client.get('statuses/user_timeline', function (error, tweets, response) {
                 if(error) throw error;
-                console.log(JSON.stringify(tweets, null, 2));
-                
-            })
-                
+                for (let i = 0; i < tweets.length && tweets.length <= 20; i++) {
+                    console.log("\nTweet #" + (i+1));
+                    console.log(JSON.stringify(tweets[i].text, null, 2));
+                    console.log("\n-----------------");
+                }
+            });
         }
 
         // if spotify task is picked
