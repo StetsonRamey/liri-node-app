@@ -103,27 +103,52 @@ inquirer
                     }
                 ])
                 .then(function (inquirerResponse3) {
-                    // set the queryURL
-                    var queryUrl = "http://www.omdbapi.com/?t=" + inquirerResponse3.searchMovie + "&apikey=trilogy";
-                    console.log(queryUrl);
+                    if (inquirerResponse3.searchMovie != "") {
+                       // set the queryURL
+                        var queryUrl = "http://www.omdbapi.com/?t=" + inquirerResponse3.searchMovie + "&apikey=trilogy";
+                        console.log(queryUrl);
 
-                    request(queryUrl, function (error, response, body) {
-                        if (!error && response.statusCode === 200) {
-                            console.log("--------------------------------------\n");
-                            console.log("Title: " + JSON.parse(body).Title);
-                            console.log("Release Year: " + JSON.parse(body).Year);
-                            console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-                            // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Rating[0]);
-                            console.log("Country Where Produced: " + JSON.parse(body).Country);
-                            console.log("Language: " + JSON.parse(body).Language);
-                            console.log("Plot: " + JSON.parse(body).Plot);
-                            console.log("Actors: " + JSON.parse(body).Actors);
-                            console.log("\n--------------------------------------");
-                        }
-                        else {
-                            console.log("it's f-ed: " + error);
-                        }
-                    });
+                        request(queryUrl, function (error, response, body) {
+                            if (!error && response.statusCode === 200) {
+                                console.log("--------------------------------------\n");
+                                console.log("Title: " + JSON.parse(body).Title);
+                                console.log("Release Year: " + JSON.parse(body).Year);
+                                console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+                                // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Rating[0]);
+                                console.log("Country Where Produced: " + JSON.parse(body).Country);
+                                console.log("Language: " + JSON.parse(body).Language);
+                                console.log("Plot: " + JSON.parse(body).Plot);
+                                console.log("Actors: " + JSON.parse(body).Actors);
+                                console.log("\n--------------------------------------");
+                            }
+                            else {
+                                console.log("it's f-ed: " + error);
+                            }
+                        }); 
+                    }
+                    else {
+                        // set the queryURL
+                        var queryUrl = "https://www.omdbapi.com/?t=mr+nobody&apikey=trilogy";
+                        console.log(queryUrl);
+
+                        request(queryUrl, function (error, response, body) {
+                            if (!error && response.statusCode === 200) {
+                                console.log("--------------------------------------\n");
+                                console.log("Title: " + JSON.parse(body).Title);
+                                console.log("Release Year: " + JSON.parse(body).Year);
+                                console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+                                // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Rating[0]);
+                                console.log("Country Where Produced: " + JSON.parse(body).Country);
+                                console.log("Language: " + JSON.parse(body).Language);
+                                console.log("Plot: " + JSON.parse(body).Plot);
+                                console.log("Actors: " + JSON.parse(body).Actors);
+                                console.log("\n--------------------------------------");
+                            }
+                            else {
+                                console.log("it's f-ed: " + error);
+                            }
+                        }); 
+                    }
                 });
         }
 
