@@ -3,6 +3,7 @@ var Spotify = require("node-spotify-api");
 var Twitter = require("twitter");
 var request = require("request");
 var inquirer = require("inquirer");
+var fs = require("fs");
 
 const keys = require("./keys.js");
 
@@ -154,6 +155,40 @@ inquirer
 
         // if do what it says task
         else if (inquirerResponse1.type === "do-what-it-says") {
-            console.log("you picked do it do it");
+            fs.readFile("random.txt", "utf8", function (error, data) {
+               if (error) {
+                console.log("it's f-ed: " + error);
+               } 
+               var output = data.split(",");
+
+            //    from here split spotify-this into a function and call that function here
+            // because I have this in an inquirer, I'd have to do some other stuff to it too, like store the second place in that array directly to the inquirerResponse2 variable
+
+            // OR JUST DO THIS
+
+            spotify.search(
+                {
+                type: "track",
+                query: output[1],
+                limit: 3
+                },
+                function (error, data) {
+                    if (!error) {
+                        // artist(s)
+                        console.log("--------------------------------------\n");
+                        console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                        // Song name
+                        console.log("Track Name: " + data.tracks.items[0].name);
+                        // preview link
+                        console.log("Preview Link: " + data.tracks.items[0].preview_url);
+                        // album
+                        console.log("Album: " + data.tracks.items[0].album.name);
+                        console.log("\n--------------------------------------\n");
+                    }
+                    else {
+                        console.log("it's f-ed: " + error);
+                    }
+                });
+            });
         }
     });
